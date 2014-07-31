@@ -14,7 +14,7 @@ public:
 
 	void acquire()
 	{
-		this->lock_->acquire();
+		this->lock_.acquire();
 		this->owner_ = true;
 	}
 
@@ -22,11 +22,11 @@ public:
 	{
 		if (this->owner_)
 		{
-			this->lock_->release();
+			this->lock_.release();
 			this->owner_ = false;
 		}
 	}
-	~thread_mutex()
+	~thread_mutex_guard()
 	{
 		this->release();
 	}
@@ -34,10 +34,10 @@ public:
 private:
 
 	thread_mutex_guard(const thread_mutex_guard &);
-	void operator=(const thread_mutex &)
+	void operator=(const thread_mutex &);
 
 private:
-	thread_mutex *lock_;
+	thread_mutex &lock_;
 	bool owner_;
 };
 #endif

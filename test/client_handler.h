@@ -24,7 +24,7 @@ public:
 	virtual int handle_output();
 
 	int send_message(const char *msg, const int len);
-protected:
+
 	virtual int handle_buff_msg(); 
 
 	virtual int handle_message(const int msg_id,

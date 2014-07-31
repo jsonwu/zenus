@@ -1,30 +1,51 @@
 CXX=g++
 CPP_FLAGS= -Wall -O3 -g 
-LIB=-lpthread
+LIB=-lpthread -lmysqlclient -lz -lcrypt -lnsl -lm -lssl -lcrypto -lprotobuf
+LIB_DIR = -L/usr/lib64/mysql 
 
-
-TARGET=test
+TARGET=zenus
 
 MACROS =
 
 VPATH = ../share/
+VPATH += ../protc 
 
-INCLUDE_DIRS = -I./ -I../share/net  -I../share/common  -I../share/thread
+
+INCLUDE_DIRS = -I./ -I../share/net  -I../share/common  -I../share/thread  -I../common -I/usr/include/mysql/  -I../protc
 
 CPPFLAGS := $(CPP_FLAGS) $(INCLUDE_DIRS) $(MACROS)
+LFALGS :=  $(CPP_FLAGS)  $(LIB) $(LIB_DIR)
 
 SRCS := $(wildcard *.cpp)
-OBJS := $(patsubst %.cpp,%.o,$(SRCS))
+OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))
+#OBJS := $(SRCS:%.cpp=%.o)
 
-$(TARGET):$(OBJS)
-	$(CXX) $(CPPFLAGS) $^ -o $@  $(LIB)
+SRC_CC := $(wildcard ../protc/*.cc)
+OBJS_CC := $(notdir $(patsubst %.cc, %.o, $(SRC_CC)))
 
 
-$(OBJS):%.o:%.cpp 
-	$(CXX) $(INCLUDE) $(CPPFLAGS) -c $< -o $@ 
+#OBJS +=$(SRC_CC:%.cc=%.o)
+
+
+#OBJS := $(OBJS_CC)
+#OBJS += $(OBJS_CPP)
+
+
+$(TARGET):$(OBJS_CPP) $(OBJS_CC)
+	$(CXX) $(LFALGS) $^ -o $@
+
+
+$(OBJS_CPP):%.o:%.cpp
+	$(CXX) $(INCLUDE)   $(CPPFLAGS) -c  $< -o $@ 
+
+$(OBJS_CC):%.o:%.cc
+	$(CXX) $(INCLUDE)   $(CPPFLAGS) -c  $< -o $@ 
 
 echo:
 	echo $(SRCS)
+	echo $(SRC_CC)
+	echo $(OBJS_CC)
+	echo $(OBJS_CPP)
 
 clean:
 	-rm -rf $(TARGET) *.o

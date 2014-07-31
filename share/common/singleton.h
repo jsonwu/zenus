@@ -10,19 +10,22 @@ class singleton
 public:
 	static type* instance()
 	{ 
-		if (instance_ == NULL)
+		if (singleton<type>::instance_ == NULL)
 		{
-			thread_mutex_guard<thread_mutex_lock> lock(singleton_lock_);
-			if (instance_ == NULL)
+			thread_mutex_guard<thread_mutex_lock> lock(singleton<type>::singleton_lock_);
+			if (singleton<type>::instance_ == NULL)
 			{
-				instance_ = new type;
+				singleton<type>::instance_ = new type;
 			}
 		}
-		return instance_;
+		return singleton<type>::instance_;
 	}
-private:
+protected:
 	static type *instance_;
 	static thread_mutex_lock singleton_lock_;
 };
+
+template<typename type> type *singleton<type>::instance_ = NULL;
+template<typename type> thread_mutex_lock  singleton<type>::singleton_lock_;
 
 #endif

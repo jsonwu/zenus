@@ -1,0 +1,12 @@
+package client_server;
+message regist_account
+{
+	required string account = 1;
+	required string password = 2;
+}
+
+message login_app
+{
+	required string account = 1;
+	required string password = 2;
+}
