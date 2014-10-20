@@ -3,8 +3,12 @@
 
 #include <map>
 #include "singleton.h"
+#include "lrunnable.h"
+#include "timer.h"
+#include "lthread.h"
 
-class kcrontab_timer_fd : public singleton
+class kcrontab_timer_fd : public singleton<kcrontab_timer_fd>,
+   lrunnable
 {
 public:
 	kcrontab_timer_fd(int max_fd = 1024);
@@ -12,20 +16,23 @@ public:
 
 	int init();
 
-	int add_timer(timer &ptimer);
+	int start();
 
-	int add_timer(timer &ptimer);
+	int add_timer(s_timer *ptimer);
 
-	int run();
+	int delete_timer(int timer_fd);
+	int delete_timer(s_timer *ptimer);
+	virtual int run();
 
-	void stop_kcrontab()
-	{ this->active_ = false; }
+	void stop_kcrontab();
+
 
 private:
 	bool active_;
 	int ep_fd_;
-	int max_fd_;
-	std::map<int, timer *> timer_map_;
+	int max_fd_num_;
+	lthread  timer_thread_;
+	std::map<int, s_timer *> timer_map_;
 };
 
 #endif
