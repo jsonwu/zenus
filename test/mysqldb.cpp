@@ -2,7 +2,6 @@
 #include <errmsg.h>
 #include "mysqldb.h"
 
-
 mysqldb::mysqldb(const char* server,
 				 const char* user,
 				 const char* password,
@@ -50,8 +49,12 @@ int mysqldb::connect()
 	this->close();
 	mysql_init(&this->mysql_);
 	int timeout = 2;
-	mysql_options(&this->mysql_, MYSQL_OPT_READ_TIMEOUT, (char *)&timeout);
-	mysql_options(&this->mysql_, MYSQL_OPT_CONNECT_TIMEOUT, (char *)&timeout);
+	mysql_options(&this->mysql_,
+				  MYSQL_OPT_READ_TIMEOUT,
+				  (char *)&timeout);
+	mysql_options(&this->mysql_,
+				  MYSQL_OPT_CONNECT_TIMEOUT,
+				  (char *)&timeout);
 
 	if (mysql_real_connect(&this->mysql_,
 						   this->server_,
@@ -90,7 +93,8 @@ MYSQL_RES* mysqldb::query(const char *sql, const int len)
 		if (mysql_real_query(&this->mysql_, sql, len) != 0)
 		{
 			int ret = this->errnu();
-			if (ret == CR_SERVER_GONE_ERROR || ret == CR_SERVER_LOST)
+			if (ret == CR_SERVER_GONE_ERROR
+				|| ret == CR_SERVER_LOST)
 				this->is_connect_ = false;
 		}else
 		{
@@ -98,7 +102,8 @@ MYSQL_RES* mysqldb::query(const char *sql, const int len)
 			if (res == NULL)
 			{
 				int errno = this->errnu();
-				if (errno == CR_SERVER_GONE_ERROR || errno == CR_SERVER_LOST)
+				if (errno == CR_SERVER_GONE_ERROR
+					|| errno == CR_SERVER_LOST)
 					this->is_connect_ = false;
 			}
 		}
@@ -117,7 +122,8 @@ bool mysqldb::store(const char *sql, const int len)
 		if ( ret != 0)
 		{
 			int ret = this->errnu();
-			if (ret == CR_SERVER_GONE_ERROR || ret == CR_SERVER_LOST)
+			if (ret == CR_SERVER_GONE_ERROR
+				|| ret == CR_SERVER_LOST)
 				this->is_connect_ = false;
 		}
 	}while(!this->is_connect_ && retry_time-- > 0);

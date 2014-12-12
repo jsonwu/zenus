@@ -8,8 +8,8 @@ pattern_layout::pattern_layout(const char *name)
 
 void pattern_layout::render(logitem &item, string &out)
 {
-	cout << "laytout :" << item.msg() << endl; 
-	cout << "laytout :" << this->pattern_ << endl; 
+	//cout << "laytout :" << item.msg() << endl; 
+	//cout << "laytout :" << this->pattern_ << endl; 
 	string::const_iterator it = this->pattern_.begin();
 	while(it != this->pattern_.end())
 	{
@@ -39,7 +39,8 @@ void pattern_layout::render(logitem &item, string &out)
 			}
 		}
 	}
-	cout << "laytout :" << out << endl; 
+	out  += "\r\n";
+	//cout << "laytout :" << out << endl; 
 }
 
 

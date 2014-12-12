@@ -1,19 +1,19 @@
 LIBS = liblogger
 DEST = ../../lib
-
 CXX = g++
 
 
 SRCS := $(wildcard *.cpp)
 OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))
 
+INCLUDE_DIRS = -I../../share/thread -I../../share/common
 
 $(LIBS):$(OBJS_CPP)
 	ar r  $(DEST)/$@.a $^ 
 	rm ./*.o
 
 $(OBJS_CPP):%.o:%.cpp
-	$(CXX) -c $< -o $@
+	$(CXX) -c $(INCLUDE_DIRS) $< -o $@
 
 
 .PHONY : clean	echo

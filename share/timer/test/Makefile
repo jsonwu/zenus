@@ -12,8 +12,8 @@ VPATH += ../protc
 
 LIB_A_PATH = ../../../lib
 
-#LIB_A += $(LIB_A_PATH)/liblogger.a
 LIB_A += $(LIB_A_PATH)/libtimer.a
+LIB_A += $(LIB_A_PATH)/liblogger.a
 
 INCLUDE_DIRS = -I./ -I../../../share/timer  -I../../../share/common  -I../../thread  -I../../net
 
@@ -26,6 +26,7 @@ OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))
 
 $(TARGET):$(OBJS_CPP)
 	$(CXX) $(LFALGS) $^  -o $@  $(LIB_A)
+	rm ./*.o
 
 
 $(OBJS_CPP):%.o:%.cpp

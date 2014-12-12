@@ -7,5 +7,4 @@ const int RES_REGIST =        1000002;
 const int REQ_LOGIN =         1000003;
 const int RES_LOGIN =         1000004;
 
-
 #endif

@@ -108,7 +108,7 @@ void* epoll_worker::work_thread(void *arg)
 	return 0;
 }
 
-void epoll_worker::remove(const int sock)
+int epoll_worker::remove(const int sock)
 {
 	pthread_rwlock_wrlock(&this->rwlock_);
 	std::map<int, epoll_handler*>::iterator itor = this->handlers_.find(sock);
@@ -121,13 +121,12 @@ void epoll_worker::remove(const int sock)
 
 	struct epoll_event ev_del;
 	ev_del.data.fd = sock;
-	epoll_ctl(this->epoll_fd_, EPOLL_CTL_DEL, sock, &ev_del);
+	int res = epoll_ctl(this->epoll_fd_, EPOLL_CTL_DEL, sock, &ev_del);
 	pthread_rwlock_unlock(&this->rwlock_);
-	return ;
+	return res;
 }
 
-void epoll_worker::run_handlers()
-{
+void epoll_worker::run_handlers() {
 	return ;
 }
 

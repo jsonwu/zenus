@@ -12,6 +12,7 @@ VPATH += ../protc
 
 LIB_A_PATH = ../../../lib
 
+LIB_A += $(LIB_A_PATH)/libtimer.a
 LIB_A += $(LIB_A_PATH)/liblogger.a
 
 INCLUDE_DIRS = -I./ -I../../../share/net  -I../../../share/common  -I../../../share/thread  -I../../../share/log -I../../../common -I/usr/include/mysql/  -I../../../protc

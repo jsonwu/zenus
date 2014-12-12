@@ -3,6 +3,9 @@
 #include "login.h"
 #include "message_id_def.h"
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 
 static const int MAX_ONE_MESSAGE_lEN = 1024;
 static const int MESSAGE_HEAD_LEN =  12;

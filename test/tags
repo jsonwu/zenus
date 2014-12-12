@@ -4,108 +4,101 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+CLIENT_H_	./client.h	2;"	d
+CLIETN_HANDLER_H_	./client_handler.h	2;"	d
 CPPFLAGS	./Makefile	/^CPPFLAGS := $(CPP_FLAGS) $(INCLUDE_DIRS) $(MACROS)$/;"	m
 CPP_FLAGS	./Makefile	/^CPP_FLAGS= -Wall -O3 -g $/;"	m
 CXX	./Makefile	/^CXX=g++$/;"	m
-EPOLL_ACCEPTER_H_	../share/net/epoll_accepter.h	2;"	d
-EPOLL_HANDLER_H_	../share/net/epoll_handler.h	2;"	d
-EPOLL_WORKER_H_	../share/net/epoll_worker.h	2;"	d
-INCLUDE_DIRS	./Makefile	/^INCLUDE_DIRS = -I.\/ -I..\/share\/net  -I..\/share\/common  -I..\/share\/thread$/;"	m
-LIB	./Makefile	/^LIB=-lpthread$/;"	m
-LOCK_H_	../share/thread/lock.h	2;"	d
+DB_OPERATE_H_	./db_operate.h	2;"	d
+DEFAULE	./login.cpp	20;"	d	file:
+HANDLE_LOGIN_MESSAGE	./login.cpp	16;"	d	file:
+INCLUDE_DIRS	./Makefile	/^INCLUDE_DIRS = -I.\/ -I..\/share\/net  -I..\/share\/common  -I..\/share\/thread  -I..\/common -I\/usr\/include\/mysql\/  -I..\/protc$/;"	m
+LFALGS	./Makefile	/^LFALGS :=  $(CPP_FLAGS)  $(LIB) $(LIB_DIR)$/;"	m
+LIB	./Makefile	/^LIB=-lpthread -lmysqlclient -lz -lcrypt -lnsl -lm -lssl -lcrypto -lprotobuf$/;"	m
+LIB_DIR	./Makefile	/^LIB_DIR = -L\/usr\/lib64\/mysql $/;"	m
+LOGIN_H_	./login.h	2;"	d
 MACROS	./Makefile	/^MACROS =$/;"	m
-OBJS	./Makefile	/^OBJS := $(patsubst %.cpp,%.o,$(SRCS))$/;"	m
-SINGLETON_H_	../share/common/singleton.h	2;"	d
-SOCK_H_	../share/net/sock.h	2;"	d
-SRCS	./Makefile	/^SRCS := $(wildcard *.cpp $(SRCDIR)\/*.cpp)$/;"	m
-TARGET	./Makefile	/^TARGET=test$/;"	m
+MAX_BUFF_SIZE	./client_handler.h	10;"	d
+MAX_DATABASE_LEN	./mysqldb.h	/^const int MAX_DATABASE_LEN = 64;$/;"	v
+MAX_ONE_MESSAGE_LEN	./client_handler.h	12;"	d
+MAX_ONE_MESSAGE_lEN	./client.cpp	/^static const int MAX_ONE_MESSAGE_lEN = 1024;$/;"	v	file:
+MAX_PASSWORD_LEN	./mysqldb.h	/^const int MAX_PASSWORD_LEN = 64;$/;"	v
+MAX_SERVER_LEN	./mysqldb.h	/^const int MAX_SERVER_LEN = 64;$/;"	v
+MAX_SQL_DATA_LEN	./login.cpp	/^const int MAX_SQL_DATA_LEN = 1024;$/;"	v
+MAX_USER_LEN	./mysqldb.h	/^const int MAX_USER_LEN  = 64;$/;"	v
+MESSAGE_DATA_LEN	./client.cpp	/^static const int MESSAGE_DATA_LEN = 1000;$/;"	v	file:
+MESSAGE_HEAD_LEN	./client.cpp	/^static const int MESSAGE_HEAD_LEN =  12;$/;"	v	file:
+MSG_HEAD_LEN	./client_handler.h	11;"	d
+MYSQLDB_H_	./mysqldb.h	2;"	d
+OBJS_CC	./Makefile	/^OBJS_CC := $(notdir $(patsubst %.cc, %.o, $(SRC_CC)))$/;"	m
+OBJS_CPP	./Makefile	/^OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))$/;"	m
+PLAYER_H_	./player.h	2;"	d
+PLAYER_MGR_H_	./player_mgr.h	2;"	d
+SRCS	./Makefile	/^SRCS := $(wildcard *.cpp)$/;"	m
+SRC_CC	./Makefile	/^SRC_CC := $(wildcard ..\/protc\/*.cc)$/;"	m
+TARGET	./Makefile	/^TARGET=zenus$/;"	m
 TEST_HANDLER_H_	./test_handler.h	2;"	d
-THREAD_MUTEX_GUARD_H_	../share/thread/thread_mutex_guard.h	2;"	d
-THREAD_MUTEX_LOCK_H_	../share/thread/thread_mutex_lock.h	2;"	d
-UNUSED_ARG	../share/common/unused_arg.h	5;"	d
-UNUSED_ARG_H_	../share/common/unused_arg.h	2;"	d
 VPATH	./Makefile	/^VPATH = ..\/share\/$/;"	m
-accept_thread	../share/net/epoll_accepter.cpp	/^void* epoll_accepter<handler>::accept_thread(void *arg)$/;"	f	class:epoll_accepter
-accept_thread_id_	../share/net/epoll_accepter.h	/^  pthread_t accept_thread_id_;$/;"	m	class:epoll_accepter
-acceptor_stop_	../share/net/epoll_accepter.h	/^  bool acceptor_stop_;$/;"	m	class:epoll_accepter
-acquire	../share/thread/thread_mutex_guard.h	/^	void acquire()$/;"	f	class:thread_mutex_guard
-acquire	../share/thread/thread_mutex_lock.h	/^	virtual int acquire()$/;"	f	class:thread_mutex_lock
-dispatch	../share/net/epoll_accepter.cpp	/^int epoll_accepter<handler>::dispatch(int sock, handler *hd)$/;"	f	class:epoll_accepter
-dispatch	../share/net/epoll_worker.cpp	/^int epoll_worker::dispatch(const int sock, epoll_handler *hd)$/;"	f	class:epoll_worker
-edge_trigger_	../share/net/epoll_worker.h	/^  bool edge_trigger_;$/;"	m	class:epoll_worker
-epoll_accepter	../share/net/epoll_accepter.cpp	/^epoll_accepter<handler>::epoll_accepter():$/;"	f	class:epoll_accepter
-epoll_accepter	../share/net/epoll_accepter.h	/^class epoll_accepter$/;"	c
-epoll_fd_	../share/net/epoll_worker.h	/^  int epoll_fd_;$/;"	m	class:epoll_worker
-epoll_handler	../share/net/epoll_handler.h	/^	epoll_handler():$/;"	f	class:epoll_handler
-epoll_handler	../share/net/epoll_handler.h	/^	epoll_handler(int sock, struct sockaddr_in* remote_addr)$/;"	f	class:epoll_handler
-epoll_handler	../share/net/epoll_handler.h	/^class epoll_handler$/;"	c
-epoll_worker	../share/net/epoll_worker.cpp	/^epoll_worker::epoll_worker(bool edge_trigger):$/;"	f	class:epoll_worker
-epoll_worker	../share/net/epoll_worker.h	/^class epoll_worker$/;"	c
-events_	../share/net/epoll_worker.h	/^  struct epoll_event *events_;$/;"	m	class:epoll_worker	typeref:struct:epoll_worker::epoll_event
-get_max_events	../share/net/epoll_worker.cpp	/^int epoll_worker::get_max_events()$/;"	f	class:epoll_worker
-handle_close	../share/net/epoll_handler.h	/^	virtual int handle_close()$/;"	f	class:epoll_handler
-handle_err	../share/net/epoll_handler.h	/^	virtual int handle_err()$/;"	f	class:epoll_handler
-handle_input	../share/net/epoll_handler.h	/^	virtual int handle_input()$/;"	f	class:epoll_handler
-handle_input	./test_handler.h	/^	virtual int handle_input()$/;"	f	class:test_handler
-handle_open	../share/net/epoll_handler.h	/^	virtual int handle_open(void *arg)$/;"	f	class:epoll_handler
-handle_output	../share/net/epoll_handler.h	/^	virtual int handle_output()$/;"	f	class:epoll_handler
-handle_output	./test_handler.h	/^	virtual int handle_output()$/;"	f	class:test_handler
-handle_run	../share/net/epoll_handler.h	/^	virtual int handle_run()$/;"	f	class:epoll_handler
-handle_shutdown	../share/net/epoll_handler.h	/^	virtual int handle_shutdown()$/;"	f	class:epoll_handler
-handle_timeout	../share/net/epoll_handler.h	/^	virtual int handle_timeout()$/;"	f	class:epoll_handler
-handlers_	../share/net/epoll_worker.h	/^  std::map<int, epoll_handler*>  handlers_;$/;"	m	class:epoll_worker
-hd_num_	../share/net/epoll_accepter.h	/^  int hd_num_;$/;"	m	class:epoll_accepter
-instance	../share/common/singleton.h	/^public: static type* instance() { if (instance_ == NULL)$/;"	f	class:singleton
-instance_	../share/common/singleton.h	/^	static type *instance_;$/;"	m	class:singleton
-ip	../share/net/epoll_handler.h	/^	inline  void ip(unsigned int ip)$/;"	f	class:epoll_handler
-ip	../share/net/epoll_handler.h	/^	inline unsigned int ip()$/;"	f	class:epoll_handler
-ip_	../share/net/epoll_handler.h	/^	unsigned int ip_;$/;"	m	class:epoll_handler
-listen_port_	../share/net/epoll_accepter.h	/^  unsigned short listen_port_;$/;"	m	class:epoll_accepter
-listen_sock_	../share/net/epoll_accepter.h	/^  int listen_sock_;$/;"	m	class:epoll_accepter
-local_ip_	../share/net/epoll_accepter.h	/^  unsigned int local_ip_;$/;"	m	class:epoll_accepter
-lock	../share/thread/lock.h	/^class lock$/;"	c
-lock_	../share/thread/thread_mutex_guard.h	/^	thread_mutex *lock_;$/;"	m	class:thread_mutex_guard
+base_client	./test_handler.h	/^class base_client : public epoll_handler$/;"	c
+black_list_	./player.h	/^	std::vector<std::string> black_list_;$/;"	m	class:player
+buff_	./client_handler.h	/^	char buff_[MAX_BUFF_SIZE];$/;"	m	class:client_handler
+buff_left	./client_handler.cpp	/^int client_handler::buff_left()$/;"	f	class:client_handler
+buff_messg_len	./client_handler.cpp	/^int client_handler::buff_messg_len()$/;"	f	class:client_handler
+check_one_message_ok	./client_handler.cpp	/^int client_handler::check_one_message_ok()$/;"	f	class:client_handler
+client	./client.h	/^class client : public client_handler$/;"	c
+client_handler	./client_handler.cpp	/^client_handler::client_handler(int sock, struct sockaddr_in* remote_addr) :$/;"	f	class:client_handler
+client_handler	./client_handler.h	/^class client_handler : public epoll_handler$/;"	c
+close	./mysqldb.cpp	/^void mysqldb::close() $/;"	f	class:mysqldb
+connect	./mysqldb.cpp	/^int mysqldb::connect()$/;"	f	class:mysqldb
+database_	./mysqldb.h	/^	char database_[MAX_DATABASE_LEN];$/;"	m	class:mysqldb
+db_operate	./db_operate.h	/^class db_operate : public singleton<db_operate>$/;"	c
+errnu	./mysqldb.cpp	/^int mysqldb::errnu()$/;"	f	class:mysqldb
+find	./player_mgr.cpp	/^player* player_mgr::find(std::string &account)$/;"	f	class:player_mgr
+good_friends_	./player.h	/^	std::vector<std::string> good_friends_;$/;"	m	class:player
+handle_buff_msg	./client_handler.cpp	/^int client_handler::handle_buff_msg()$/;"	f	class:client_handler
+handle_close	./test_handler.h	/^	virtual int handle_close()$/;"	f	class:base_client
+handle_err	./test_handler.h	/^	virtual int handle_err()$/;"	f	class:base_client
+handle_input	./client_handler.cpp	/^int client_handler::handle_input()$/;"	f	class:client_handler
+handle_input	./test_handler.h	/^	virtual int handle_input()$/;"	f	class:base_client
+handle_message	./client.cpp	/^int client::handle_message(const int msg_id,$/;"	f	class:client
+handle_message	./client_handler.cpp	/^int client_handler::handle_message(const int msg_id,$/;"	f	class:client_handler
+handle_output	./client_handler.cpp	/^int client_handler::handle_output()$/;"	f	class:client_handler
+handle_output	./test_handler.h	/^	virtual int handle_output()$/;"	f	class:base_client
+head_	./client_handler.h	/^	char *head_;$/;"	m	class:client_handler
+init	./db_operate.cpp	/^int db_operate::init(const char* server,$/;"	f	class:db_operate
+init	./mysqldb.cpp	/^int mysqldb::init(const char* server,$/;"	f	class:mysqldb
+is_connect_	./mysqldb.h	/^	bool is_connect_;;$/;"	m	class:mysqldb
+login	./login.h	/^class login : public singleton<login>$/;"	c
+login_app	./login.cpp	/^int login::login_app(client *pclietn, const char *msg, const int len)$/;"	f	class:login
 main	./test_accept_main.cpp	/^int main()$/;"	f
-max_events_	../share/net/epoll_worker.h	/^  int max_events_;$/;"	m	class:epoll_worker
-mutex_	../share/thread/thread_mutex_lock.h	/^	pthread_mutex_t  mutex_;$/;"	m	class:thread_mutex_lock
-owner_	../share/thread/thread_mutex_guard.h	/^	bool owner_;$/;"	m	class:thread_mutex_guard
-port	../share/net/epoll_handler.h	/^	inline  void port(unsigned short port)$/;"	f	class:epoll_handler
-port	../share/net/epoll_handler.h	/^	inline unsigned int port()$/;"	f	class:epoll_handler
-port_	../share/net/epoll_handler.h	/^	unsigned short port_;$/;"	m	class:epoll_handler
-recv	../share/net/epoll_handler.h	/^	ssize_t recv(char *buf, size_t length, int flags)$/;"	f	class:epoll_handler
-release	../share/thread/thread_mutex_guard.h	/^	void release()$/;"	f	class:thread_mutex_guard
-release	../share/thread/thread_mutex_lock.h	/^	virtual int release()$/;"	f	class:thread_mutex_lock
-remove	../share/net/epoll_worker.cpp	/^void epoll_worker::remove(const int sock)$/;"	f	class:epoll_worker
-run_handlers	../share/net/epoll_worker.cpp	/^void epoll_worker::run_handlers()$/;"	f	class:epoll_worker
-rwlock_	../share/net/epoll_worker.h	/^  pthread_rwlock_t rwlock_;$/;"	m	class:epoll_worker
-send	../share/net/epoll_handler.h	/^	ssize_t send(const void *buf, size_t length, int flags)$/;"	f	class:epoll_handler
-set_noblock	../share/net/sock.h	/^  static int set_noblock(const int sockfd)$/;"	f	class:sock
-set_sockfd_reuseable	../share/net/sock.h	/^  static int set_sockfd_reuseable(const int sockfd)$/;"	f	class:sock
-singleton	../share/common/singleton.h	/^class singleton$/;"	c
-singleton_lock_	../share/common/singleton.h	/^	static thread_mutex_lock singleton_lock_;$/;"	m	class:singleton
-sock	../share/net/epoll_handler.h	/^	inline int sock()$/;"	f	class:epoll_handler
-sock	../share/net/epoll_handler.h	/^	inline void sock(int sk)$/;"	f	class:epoll_handler
-sock	../share/net/sock.h	/^class sock$/;"	c
-sock_	../share/net/epoll_handler.h	/^	int sock_;$/;"	m	class:epoll_handler
-start	../share/net/epoll_accepter.cpp	/^int epoll_accepter<handler>::start(unsigned int ip,$/;"	f	class:epoll_accepter
-start	../share/net/epoll_accepter.cpp	/^int epoll_accepter<handler>::start(unsigned short port,$/;"	f	class:epoll_accepter
-start	../share/net/epoll_worker.cpp	/^int epoll_worker::start()$/;"	f	class:epoll_worker
-stop	../share/net/epoll_accepter.cpp	/^int epoll_accepter<handler>::stop()$/;"	f	class:epoll_accepter
-stop	../share/net/epoll_worker.cpp	/^int epoll_worker::stop(void)$/;"	f	class:epoll_worker
-test_handler	./test_handler.h	/^	test_handler(int sock_fd, struct sockaddr_in *remote_addr)$/;"	f	class:test_handler
-test_handler	./test_handler.h	/^class test_handler : public epoll_handler$/;"	c
-thread_mutex_guard	../share/thread/thread_mutex_guard.h	/^	thread_mutex_guard(thread_mutex &lock)$/;"	f	class:thread_mutex_guard
-thread_mutex_guard	../share/thread/thread_mutex_guard.h	/^class thread_mutex_guard$/;"	c
-thread_mutex_lock	../share/thread/thread_mutex_lock.h	/^	thread_mutex_lock()$/;"	f	class:thread_mutex_lock
-thread_mutex_lock	../share/thread/thread_mutex_lock.h	/^class thread_mutex_lock : public lock$/;"	c
-thread_worker_id_	../share/net/epoll_worker.h	/^  pthread_t thread_worker_id_;$/;"	m	class:epoll_worker
-timer_tm_	../share/net/epoll_handler.h	/^	time_t timer_tm_;$/;"	m	class:epoll_handler
-userarg_	../share/net/epoll_handler.h	/^	void *userarg_;$/;"	m	class:epoll_handler
-work_stop_	../share/net/epoll_worker.h	/^  bool work_stop_;$/;"	m	class:epoll_worker
-work_thread	../share/net/epoll_worker.cpp	/^void* epoll_worker::work_thread(void *arg)$/;"	f	class:epoll_worker
-worker_num_	../share/net/epoll_accepter.h	/^  int worker_num_;$/;"	m	class:epoll_accepter
-workers_	../share/net/epoll_accepter.h	/^  vector<epoll_worker *> workers_;$/;"	m	class:epoll_accepter
-~epoll_accepter	../share/net/epoll_accepter.cpp	/^epoll_accepter<handler>::~epoll_accepter()$/;"	f	class:epoll_accepter
-~epoll_handler	../share/net/epoll_handler.h	/^	virtual ~epoll_handler()$/;"	f	class:epoll_handler
-~epoll_worker	../share/net/epoll_worker.cpp	/^epoll_worker::~epoll_worker()$/;"	f	class:epoll_worker
-~thread_mutex	../share/thread/thread_mutex_guard.h	/^	~thread_mutex()$/;"	f	class:thread_mutex_guard
+move_buff_head	./client_handler.cpp	/^void client_handler::move_buff_head()$/;"	f	class:client_handler
+msg_id_	./client_handler.h	/^	int msg_id_;  \/\/用于测试验证消息号$/;"	m	class:client_handler
+mysql_	./mysqldb.h	/^	MYSQL  mysql_;$/;"	m	class:mysqldb
+mysqldb	./mysqldb.cpp	/^mysqldb::mysqldb()$/;"	f	class:mysqldb
+mysqldb	./mysqldb.cpp	/^mysqldb::mysqldb(const char* server,$/;"	f	class:mysqldb
+mysqldb	./mysqldb.h	/^class mysqldb$/;"	c
+mysqldb_	./db_operate.h	/^	mysqldb* mysqldb_;$/;"	m	class:db_operate
+password_	./mysqldb.h	/^	char password_[MAX_PASSWORD_LEN];$/;"	m	class:mysqldb
+player	./player.h	/^class player$/;"	c
+player_map_	./player_mgr.h	/^	std::map<std::string, player*> player_map_;$/;"	m	class:player_mgr
+player_mgr	./player_mgr.h	/^class player_mgr : public singleton<player_mgr>$/;"	c
+port_	./mysqldb.h	/^	unsigned int port_;$/;"	m	class:mysqldb
+process_msg	./login.cpp	/^int login::process_msg(client *pclient, const int msg_id, const char *msg, const int len)$/;"	f	class:login
+query	./db_operate.cpp	/^MYSQL_RES* db_operate::query(const char *msg, const int len)$/;"	f	class:db_operate
+query	./mysqldb.cpp	/^MYSQL_RES* mysqldb::query(const char *sql, const int len)$/;"	f	class:mysqldb
+regist_accout	./login.cpp	/^int login::regist_accout(client *pclient, const char *msg, const int len)$/;"	f	class:login
+row_number	./db_operate.cpp	/^unsigned int db_operate::row_number(MYSQL_RES *res)$/;"	f	class:db_operate
+row_number	./mysqldb.cpp	/^unsigned int mysqldb::row_number(MYSQL_RES *res)$/;"	f	class:mysqldb
+send_client_msg	./client.cpp	/^int client::send_client_msg(const int msg_id, const char *msg, const int len)$/;"	f	class:client
+send_errno	./client.cpp	/^int client::send_errno(const int msg_id, const int err_id)$/;"	f	class:client
+send_message	./client_handler.cpp	/^int client_handler::send_message(const char *msg, const int len)$/;"	f	class:client_handler
+send_msg_impl	./client.cpp	/^int client::send_msg_impl(const int msg_id, const char *msg, const int len, const int ernno)$/;"	f	class:client
+server_	./mysqldb.h	/^	char server_[MAX_SERVER_LEN];$/;"	m	class:mysqldb
+sock_busy_message_list_	./client_handler.h	/^	std::list<std::string> sock_busy_message_list_;$/;"	m	class:client_handler
+store	./db_operate.cpp	/^bool db_operate::store(const char *msg, const int len)$/;"	f	class:db_operate
+store	./mysqldb.cpp	/^bool mysqldb::store(const char *sql, const int len)$/;"	f	class:mysqldb
+tail_	./client_handler.h	/^	char *tail_;$/;"	m	class:client_handler
+test_handler	./test_handler.h	/^	test_handler(int sock_fd, struct sockaddr_in *remote_addr)$/;"	f	class:base_client
+user_	./mysqldb.h	/^	char user_[MAX_USER_LEN];$/;"	m	class:mysqldb
+~client_handler	./client_handler.h	/^	virtual ~client_handler()$/;"	f	class:client_handler
+~mysqldb	./mysqldb.cpp	/^mysqldb::~mysqldb()$/;"	f	class:mysqldb

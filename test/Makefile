@@ -2,6 +2,10 @@ CXX=g++
 CPP_FLAGS= -Wall -O3 -g 
 LIB=-lpthread -lmysqlclient -lz -lcrypt -lnsl -lm -lssl -lcrypto -lprotobuf
 LIB_DIR = -L/usr/lib64/mysql 
+SHARE_LIB_PATH = ../lib
+
+DB_LIB += $(SHARE_LIB_PATH)/libnet.a
+DB_LIB += $(SHARE_LIB_PATH)/libtimer.a
 
 TARGET=zenus
 
@@ -10,8 +14,7 @@ MACROS =
 VPATH = ../share/
 VPATH += ../protc 
 
-
-INCLUDE_DIRS = -I./ -I../share/net  -I../share/common  -I../share/thread  -I../common -I/usr/include/mysql/  -I../protc
+INCLUDE_DIRS = -I./ -I../share/net  -I../share/common   -I ../share/timer -I../share/thread  -I../common -I/usr/include/mysql/  -I../protc
 
 CPPFLAGS := $(CPP_FLAGS) $(INCLUDE_DIRS) $(MACROS)
 LFALGS :=  $(CPP_FLAGS)  $(LIB) $(LIB_DIR)
@@ -32,7 +35,8 @@ OBJS_CC := $(notdir $(patsubst %.cc, %.o, $(SRC_CC)))
 
 
 $(TARGET):$(OBJS_CPP) $(OBJS_CC)
-	$(CXX) $(LFALGS) $^ -o $@
+	$(CXX) $(LFALGS) $^ -o $@ $(DB_LIB)
+	rm *.o
 
 
 $(OBJS_CPP):%.o:%.cpp
@@ -43,10 +47,7 @@ $(OBJS_CC):%.o:%.cc
 
 echo:
 	echo $(SRCS)
-	echo $(SRC_CC)
-	echo $(OBJS_CC)
-	echo $(OBJS_CPP)
-
+	echo $(SRC_CC) echo $(OBJS_CC) echo $(OBJS_CPP) 
 clean:
 	-rm -rf $(TARGET) *.o
 

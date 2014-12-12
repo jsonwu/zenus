@@ -14,8 +14,9 @@ public:
   int start(void);
   int stop(void);
   int dispatch(const int sock, epoll_handler *hd);
+  int remove(const int sock);
+
 private:
-  void remove(const int sock);
   int get_max_events();
   void run_handlers();
   static void* work_thread(void *arg);
@@ -34,5 +35,4 @@ private:
   std::map<int, epoll_handler*>  handlers_;
 };
 
-#include "epoll_worker.cpp"
 #endif

@@ -1,6 +1,7 @@
 #ifndef EPOLL_SOCK_H_
 #define EPOLL_SOCK_H_
 
+#include <time.h>
 
 class epoll_sock
 {

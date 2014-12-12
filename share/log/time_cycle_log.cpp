@@ -47,9 +47,14 @@ int time_cycle_log::start()
 {
 	if (this->open() < 0)
 		return -1;
+
+	//就是说如果不产生新文件 是不需要线程的
+	if (this->splite_type_ == LOG_NOT_NEW) 
+		return 0;
+
 	if(this->lthread_.start(this))
 		return -1;
-	this->if_log_new_file();
+	this->if_log_new_file();  //for set this->last_splite_value_;
 	return 0;
 }
 
@@ -62,7 +67,6 @@ int time_cycle_log::run()
 			this->close();
 			this->open();
 		}
-		cout << "thread sleep" <<endl;
 		sleep(30);
 	}
 	return 0;

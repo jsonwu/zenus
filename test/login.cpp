@@ -25,7 +25,7 @@ int login::process_msg(client *pclient, const int msg_id, const char *msg, const
 	switch(msg_id)
 	{
 		HANDLE_LOGIN_MESSAGE(REQ_REGIST, regist_accout);
-		HANDLE_LOGIN_MESSAGE(REQ_LOGIN, login);
+		HANDLE_LOGIN_MESSAGE(REQ_LOGIN, login_app);
 		DEFAULE;
 	}
 	return ret;
@@ -81,7 +81,8 @@ error:
 
 int login::login_app(client *pclietn, const char *msg, const int len)
 {
-	int ret = 0;
+	//int ret = 0;
+	/*
 	client_server::login_app  regist_message;
 	regist_message.ParseFromArray(msg, len); 
 
@@ -89,4 +90,6 @@ int login::login_app(client *pclietn, const char *msg, const int len)
 	std::string password = regist_message.password();
 
 	player_manager::instance()->find(account);
+	*/
+	return 0;
 }

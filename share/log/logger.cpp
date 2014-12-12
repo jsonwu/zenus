@@ -1,9 +1,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <iostream>
+
 #include "logger.h"
+#include "thread_mutex_guard.h"
 
 #define MAX_LOG_BUFF_SIZE 4096
+#define MAX_LOG_FILENAME_SIZE 512
 
 logger::logger(string filename_pattern)
 	:filename_pattern_(filename_pattern)
@@ -37,6 +40,8 @@ int logger::open()
 {
 	string file_name;
 	this->logfile_name(file_name);
+
+	thread_mutex_guard<thread_mutex_lock> lock(this->mutex_lock_);
 	return this->writer_->open(file_name);
 }
 
@@ -50,7 +55,8 @@ int logger::log(char *formate, ...)
 	char buff[MAX_LOG_BUFF_SIZE] = {0};
 	vsnprintf(buff, MAX_LOG_BUFF_SIZE-1, formate, args);
 	va_end(args);
-
+	
+	thread_mutex_guard<thread_mutex_lock> lock(this->mutex_lock_);
 	int result = this->writer_->write(buff);
 	return result;
 }
@@ -62,15 +68,18 @@ int logger::log(logitem &item)
 		if (!this->filter_->pass(item))
 			return -1;
 	}
+
+	string write_msg;
 	if (this->layout_ != NULL)
 	{
-		string out_string;
-		this->layout_->render(item, out_string);
-		this->writer_->write(out_string);
+		this->layout_->render(item, write_msg);
 	}else
 	{
-		this->writer_->write(item.msg());
+		write_msg = item.msg();
 	}
+
+	thread_mutex_guard<thread_mutex_lock> lock(this->mutex_lock_);
+	this->writer_->write(write_msg);
 
 	return 0;
 }
@@ -101,9 +110,9 @@ void logger::set_writer(writer *w)
 
 void logger::logfile_name(string &file_name)
 {
-	char buff[1024] = {0};
+	char buff[MAX_LOG_FILENAME_SIZE] = {0};
 	time_t now = time(NULL);
 	struct tm *t = localtime(&now);
-	strftime(buff, 1023, this->filename_pattern_.c_str(), t);
+	strftime(buff, MAX_LOG_FILENAME_SIZE-1, this->filename_pattern_.c_str(), t);
 	file_name = buff; 
 }

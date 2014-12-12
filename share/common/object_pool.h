@@ -1,22 +1,22 @@
-#ifndef OBJECT_POOL_H_
-#define OBJECT_POOL_H_
+#ifndef FAST_OBJECT_POOL_H_
+#define FAST_OBJECT_POOL_H_
 
 #include <list>
 #include <stdlib.h>
 #include <iostream>
+#include "singleton.h"
 
 //pay attention !!!!
 //the Type must had init() and uinit
-//not support class with  virtural function
-//beacuse use malloc a long neicun to be faster 
+//beacuse use malloc not support class with  virtural function  or stl: vector list and so on 
+//beacuse use malloc a long memory to be faster 
 
 template<typename Type>
-class object_pool : public singleton<object_pool<>>
+class object_pool : public singleton <object_pool<Type> >
 {
 public:
 	object_pool();
 	~object_pool();
-
 	bool init(const int every_size);
 
 	Type* alloc();
@@ -33,14 +33,18 @@ private:
 
 template<typename Type>
 object_pool<Type>::object_pool()
-{ }
+{
+	this->init(100);
+}
 
 template<typename Type>
 object_pool<Type>::~object_pool()
 {
+	/*
 	std::list<Type *>::iterator it = this->data_list_.begin();
 	for(; it != this->data_list_.end(); ++it)
-		delete *it;
+		delete it;
+		*/
 }
 
 template<typename Type>
@@ -90,6 +94,7 @@ bool object_pool<Type>::expand(const int size)
 	for (int i = 0; i < this->every_expand_size_; ++i)
 	{
 		Type *p_data = p+i;
+		new(p_data) Type;
 
 		p_data->init();
 		this->data_list_.push_back(p_data);

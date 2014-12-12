@@ -6,6 +6,16 @@
 //  pay attention !!!!!!
 //  only support one thread read  one thread write
 //  write in 2014-9-5 in prefect world
+//  only support keep pointer int queue; 
+//  for example:
+//       class test {int a; int b};
+//       nolockqueue<test> queue;
+//       test *m = new test;
+//       queue.push(m);           // push into queue;
+//       test *n = queue.pop();   // pop pointer out of queue
+//
+//
+
 
 template<typename Type>
 class nolockqueue
@@ -51,8 +61,7 @@ bool nolockqueue<Type>::init(const int size)
 	this->p_queue_ = new Type *[size];
 	if (this->p_queue_ == NULL)
 		goto error;
-	for (int i = 0; i < size; ++i)
-		this->p_queue_[i] = NULL;
+	for (int i = 0; i < size; ++i) this->p_queue_[i] = NULL;
 
 	this->push_position_ = 0;
 	this->pop_position_ = 0;
@@ -62,7 +71,6 @@ bool nolockqueue<Type>::init(const int size)
 error:
 	return false;
 }
-#endif
 
 template<typename Type>
 bool nolockqueue<Type>::push(Type *data)
@@ -82,9 +90,9 @@ Type* nolockqueue<Type>::pop()
 
 	if (this->p_queue_[postion] == NULL)
 		return NULL;
-
-	Type* tmp = this->p_queue_[postion];
+Type* tmp = this->p_queue_[postion];
 	this->p_queue_[postion] = NULL;
 	__sync_fetch_and_add(&this->pop_position_, 1);
 	return tmp;
 }
+#endif

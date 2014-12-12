@@ -21,6 +21,8 @@ public:
 	{ }
 
 	epoll_handler(int sock, struct sockaddr_in* remote_addr)
+		:timer_tm_(0),
+		userarg_(NULL)
 	{
 		this->sock_ = sock;
 		this->ip_ = remote_addr->sin_addr.s_addr;

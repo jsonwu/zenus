@@ -1,7 +1,9 @@
+#include <string.h>
 #include "client_handler.h"
 #include "sock.h"
 
-client_handler::client_handler(int sock, struct sockaddr_in* remote_addr) :
+client_handler::client_handler(int sock,
+							   struct sockaddr_in* remote_addr) :
 	epoll_handler(sock, remote_addr)
 {
 	this->msg_id_ = 1;
@@ -24,7 +26,10 @@ int client_handler::handle_input()
 			break;
 		}
 		else if (len == 0)
+		{
+
 			break;
+		}
 		else
 			this->head_ += len;
 
@@ -47,14 +52,16 @@ int client_handler::handle_output()
 		std::list<std::string>::iterator iter =
 			this->sock_busy_message_list_.begin();
 
-		ret = sock::send_n_msg(this->sock(), (*iter).c_str(), (*iter).size());
+		ret = sock::send_n_msg(this->sock(),
+							   (*iter).c_str(),
+							   (*iter).size());
 		if (ret < 0)
-			break;
-		else if (ret == 0)
+			break; else if (ret == 0)
 			break;
 		else if (ret > 0 && (unsigned int)ret < (*iter).size())
 		{
-			std::string left_msg((*iter).begin() + ret, (*iter).end());
+			std::string left_msg((*iter).begin() + ret,
+								 (*iter).end());
 			this->sock_busy_message_list_.pop_front();
 			this->sock_busy_message_list_.push_front(left_msg);
 			break;
@@ -64,6 +71,27 @@ int client_handler::handle_output()
 		}
 	}
 	return 0;
+}
+
+void client_handler::add_protoc_head(const int message_id, const char *buff_dest, const char *msg, const int len)
+{
+	char *dest = buff_dest;
+	*(int *)dest = MSG_HEAD_LEN + len;
+	dest += 4
+	*(int *)dest = message_id;
+	dest += 4;
+	strncpy(dest, buff, msg, len);
+}
+
+int client_handler::send(const int message_id, const char *message, const int len)
+{
+	char buff[MAX_ONE_MESSAGE_LEN] = {0};
+	this->add_protoc_head(buff, message, len);
+	return this->send_message(buff, strlen(buff));
+}
+int client_handler::send(const int message_id, const string &message)
+{
+	return this->send(message_id, message.c_str(), message.len());
 }
 
 
@@ -103,7 +131,8 @@ int client_handler::handle_message(const int msg_id,
 }
 
 
-int client_handler::send_message(const char *msg, const int len)
+int client_handler::send_message(const char *msg,
+								 const int len)
 {
 	if (this->sock_busy_message_list_.empty())
 	{
@@ -116,7 +145,10 @@ int client_handler::send_message(const char *msg, const int len)
 		{
 			this->sock_busy_message_list_.push_back(std::string(msg+ret, len-ret));
 		}
-	}
+	}else
+	{
+		this->sock_busy_message_list_.push_back(std::string(msg, len));
+
 	return 0;
 }
 
@@ -127,7 +159,6 @@ int client_handler::buff_messg_len()
 
 void client_handler::move_buff_head()
 {
-	std::cout << "move to head" << std::endl;
 	int len = this->buff_messg_len();
 	memmove(this->buff_, this->tail_, len);
 	this->tail_ = this->buff_;

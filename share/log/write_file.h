@@ -1,6 +1,7 @@
 #ifndef WRITE_FILE_H_
 #define WRITE_FILE_H_
 
+#include <stdio.h>
 #include "writer.h"
 
 class write_file  : public writer
@@ -15,6 +16,7 @@ public:
 	virtual int flush();
 	virtual int close();
 private:
+	FILE *fp_;
 	int file_fd_;
 	string path_;
 };

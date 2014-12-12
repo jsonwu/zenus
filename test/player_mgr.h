@@ -9,10 +9,12 @@
 class player_mgr : public singleton<player_mgr>
 {
 public:
-	player* find(std::string &account);
-
+	player* find(const int char_id);
+	int insert(const int player_id, player *pl);
+	int del(const int player_id);
 private:
-	std::map<std::string, player*> player_map_;
+	typedef std::map<int, player*>::iterator player_map_iterator;
+	std::map<int/*player_id*/, player*> player_map_;
 };
 
 #endif

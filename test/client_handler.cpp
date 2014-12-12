@@ -78,8 +78,8 @@ int client_handler::handle_buff_msg()
 		}
 		int msg_id = *(int *)(this->tail_ + 4);
 		this->handle_message(msg_id,
-							 this->tail_ + MSG_HEAD_LEN,
-							 one_message_len-MSG_HEAD_LEN);
+				this->tail_ + MSG_HEAD_LEN,
+				one_message_len-MSG_HEAD_LEN);
 
 		this->tail_ += one_message_len;
 	}

@@ -7,6 +7,7 @@
 #include "logitem.h"
 #include "pattern_layout.h"
 #include "filter.h"
+#include "thread_mutex_lock.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ private:
 	layout *layout_;
 	writer *writer_;
 	string filename_pattern_;
+	thread_mutex_lock mutex_lock_;
 };
 
 
