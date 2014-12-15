@@ -1,0 +1,13 @@
+package db_server;
+message regist_account
+{
+	required string account  = 1;
+	required string password = 2;
+}
+
+message resp_regist_account
+{
+	required int32 errno_num = 1;	
+	required string account   = 2;
+}
+
