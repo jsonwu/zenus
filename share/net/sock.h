@@ -1,6 +1,7 @@
 #ifndef SOCK_H_
 #define SOCK_H_
 
+#include <iostream>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <fcntl.h>
@@ -36,8 +37,12 @@ public:
 		while(true)
 		{
 			ret = sock::send(sock_fd, msg, len, 0);
+			std::cout << "sock send" <<  ret << std::endl; 
+
+
 			if (ret < 0)
 			{
+				std::cout << sock_fd <<  len << std::endl;
 				if (errno == EINTR) 
 					continue;
 				else if (errno == EAGAIN)
@@ -50,6 +55,8 @@ public:
 			}else
 				break;
 		}
+
+		std::cout << "send n msg" <<  ret << std::endl; 
 		return ret;
 	}
 
@@ -88,6 +95,7 @@ public:
 						const size_t length,
 						const int flags)
 	{
+
 		return ::send(sock_fd, buf, length, flags);
 	}
 

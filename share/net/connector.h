@@ -7,7 +7,7 @@ class connector
 {
 public:
 	connector();
-	connector(const char *ip, unsigned int port);
+	connector(char *ip, unsigned int port);
 	int connect(const char *ip, const unsigned int  port);
 	int connect();
 	int sock_fd();

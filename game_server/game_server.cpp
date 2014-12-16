@@ -1,13 +1,22 @@
 #include <iostream>
+#include <signal.h>
 
+#include "init.h"
 #include "reactor.h"
 #include "accepter.h"
 #include "client_handler.h"
+#include "client_connector.h"
+#include "kcrontab_timer_mgr.h"
 
 using namespace std;
 
 int main()
 {
+
+	signal(SIGPIPE, SIG_IGN);
+	signal(SIGHUP, SIG_IGN);
+	if (init() < 0)
+		return -1;
 	if (reactor::instance()->init(1) < 0)
 	{
 		cout <<  "reactor init error" << endl;
@@ -19,7 +28,18 @@ int main()
 		cout << "accepter start error" <<  endl;
 		return -1;
 	}
+	char *ip = "0.0.0.0";
+	client_connector  db_connect(ip, 8089);
+	if (db_connect.connect_server() < 0)
+	{
+		cout << "connect db_server error" << endl;
+		return -1;
+	}
 
 	while(1)
-		sleep(-1);
+	{
+		kcrontab_timer_mgr::instance()->update();
+	}
 }
+
+

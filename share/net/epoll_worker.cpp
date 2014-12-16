@@ -115,7 +115,6 @@ int epoll_worker::remove(const int sock)
 	if (itor != this->handlers_.end())
 	{
 		itor->second->handle_close();
-		delete itor->second;
 		this->handlers_.erase(sock);
 	}
 

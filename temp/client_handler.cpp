@@ -1,5 +1,6 @@
 #include <string.h>
 #include <string>
+#include <iostream>
 
 #include "client_handler.h"
 #include "sock.h"
@@ -21,6 +22,8 @@ int client_handler::handle_input()
 		int len = sock::recv_n_msg(this->sock(),
 								   this->head_,
 								   MAX_ONE_MESSAGE_LEN);
+
+		std::cout << "recv len" << len << std::endl;
 		if (len < 0)
 		{
 			std::cout << "recv error" << std::endl;
@@ -78,7 +81,7 @@ void client_handler::add_protoc_head(const int message_id,
 									 const int len)
 {
 	int currt = 0;
-	*(int *)(buff_dest+currt) = MSG_HEAD_LEN + len;
+	*(int *)(buff_dest+currt) = 4  + len;
 	currt += 4;
 	*(int *)(buff_dest+currt) = message_id;
 	currt += 4;
@@ -91,6 +94,9 @@ int client_handler::send(const int message_id,
 {
 	char buff[MAX_ONE_MESSAGE_LEN] = {0};
 	this->add_protoc_head(message_id, buff, message, len);
+
+	std::cout << "send len: " << strlen(buff) << std::endl;
+
 	return this->send_message(buff, strlen(buff));
 }
 

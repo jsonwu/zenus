@@ -35,7 +35,7 @@ int connector::connect(const char *ip, const unsigned int port)
 
 	this->ip_ = ip;
 	this->port_ = port;
-	return 0;
+	return this->sock_fd_;
 }
 
 int connector::connect()

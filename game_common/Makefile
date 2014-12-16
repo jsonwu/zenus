@@ -8,8 +8,7 @@ CXX = g++
 SRCS := $(wildcard *.cpp)
 OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))
 
-INCLUDE_DIRS = -I../share/thread -I../share/common  -I. -I../share/net -I../common -I/usr/include/mysql
-
+INCLUDE_DIRS = -I../share/thread -I../share/common  -I. -I../share/net -I../common -I/usr/include/mysql -I../share/timer -I../common
 $(LIBS):$(OBJS_CPP)
 	ar r  $(DEST)/$@.a $^ 
 	rm ./*.o

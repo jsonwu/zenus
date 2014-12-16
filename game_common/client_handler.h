@@ -34,6 +34,8 @@ public:
 
 	virtual int handle_output();
 
+	virtual int handle_close();
+
 	virtual void add_protoc_head(int message_id,
 								 char *buff_dest,
 								 const char *msg,
@@ -49,6 +51,9 @@ protected:
 	virtual int handle_message(const int msg_id,
 							   const char *message,
 							   const int message_len);
+
+	int sock_status();
+	void sock_status(int sock_status);
 private:
 
 	int buff_messg_len();
@@ -60,6 +65,7 @@ private:
 	int buff_left();
 private:
 	int msg_id_;  //用于测试验证消息号
+	int sock_status_;
 	char *head_;
 	char *tail_;
 	char buff_[MAX_BUFF_SIZE];
