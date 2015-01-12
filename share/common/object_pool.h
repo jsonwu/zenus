@@ -7,9 +7,7 @@
 #include "singleton.h"
 
 //pay attention !!!!
-//the Type must had init() and uinit
-//beacuse use malloc not support class with  virtural function  or stl: vector list and so on 
-//beacuse use malloc a long memory to be faster 
+//object must have  unint to in use in release
 
 template<typename Type>
 class object_pool : public singleton <object_pool<Type> >
@@ -17,24 +15,23 @@ class object_pool : public singleton <object_pool<Type> >
 public:
 	object_pool();
 	~object_pool();
-	bool init(const int every_size);
+	int init(const int every_size);
 
 	Type* alloc();
 	void  release(Type *data);
 
 private:
-	bool expand(const int size);
+	int expand(const int size);
 
 private:
-	int init_size_;
 	int every_expand_size_;
 	std::list<Type *>  data_list_;
 };
 
 template<typename Type>
-object_pool<Type>::object_pool()
+object_pool<Type>::object_pool():
+	every_expand_size_(128)
 {
-	this->init(100);
 }
 
 template<typename Type>
@@ -48,10 +45,10 @@ object_pool<Type>::~object_pool()
 }
 
 template<typename Type>
-bool object_pool<Type>::init(const int every_size)
+int object_pool<Type>::init(const int every_size)
 {
 	if (every_size <= 0)
-		return false;
+		return -1;
 
 	this->every_expand_size_ =  every_size;
 	return this->expand(this->every_expand_size_);
@@ -63,7 +60,7 @@ Type *object_pool<Type>::alloc()
 	Type *data = NULL;
 	if (this->data_list_.empty())
 	{
-		if (!this->expand(this->every_expand_size_))
+		if (this->expand(this->every_expand_size_) < 0)
 			goto error;
 	}
 
@@ -78,12 +75,13 @@ error:
 template<typename Type>
 void object_pool<Type>::release(Type *data)
 {
-	data->uinit();
+	//data->~Type();  //析构了导致类问题
+	data->unint();
 	this->data_list_.push_back(data);
 }
 
 template<typename Type>
-bool object_pool<Type>::expand(const int size)
+int object_pool<Type>::expand(const int size)
 {
 	int type_len = sizeof(Type);
 
@@ -96,9 +94,20 @@ bool object_pool<Type>::expand(const int size)
 		Type *p_data = p+i;
 		new(p_data) Type;
 
-		p_data->init();
+		//p_data->init();
 		this->data_list_.push_back(p_data);
 	}
+
+	/*
+	for (int i = 0; i < this->every_expand_size_; ++i)
+	{
+		Type *p_data = new Type;
+
+		//p_data->init();
+		this->data_list_.push_back(p_data);
+	}
+	*/
+
 	return true;
 }
 

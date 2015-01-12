@@ -30,27 +30,17 @@ public:
 	{
 		a = 12345;
 		b = 23456;
-		c.clear();
-	}
-	void init()
-	{
-		a = 12345;
-		b = 23456;
-		c.append("ssfasfaf");
-		cout << "ok" << endl;
-	}
-	void uinit()
-	{
-		a = 0;
-		b = 0;
-		c.clear();
 	}
 	void foo()
 	{
 		cout << "ok" << endl;
 	}
+	void unint()
+	{}
 	~test()
-	{ }
+	{
+		//c.clear();
+	}
 	int a;
 	int b;
 	string c;
@@ -66,18 +56,23 @@ int main()
 	object_pool<test>::instance()->init(50);
 	list<test *> list_;
 	int k = 0;
+	cout << "init ok" << endl;
 	while(true)
 	{
-		for (int j = 0; j < 10000; ++j)
+		//cout << "to alloc" << endl;
+		for (int j = 0; j < 100000; ++j)
 		{
+			//cout << "in allco" << endl;
 			test *data = object_pool<test>::instance()->alloc();
 			//cout << data->a << " " << data->b << endl;
-			data->c = "10000";
+			data->c.append("s");
 			list_.push_back(data);
 		}
+		//cout << "allc ok" << endl;
 		list<test *>::iterator it =  list_.begin();
 		for(; it != list_.end(); ++it)
 		{
+			//cout << "release" << endl;
 			object_pool<test>::instance()->release(*it);
 		}
 		list_.clear();

@@ -11,6 +11,7 @@ VPATH = ../share/
 VPATH += ../protc 
 
 LIB_A_PATH = ../../../lib
+LIB_A += $(LIB_A_PATH)/libpip.a
 
 
 INCLUDE_DIRS = -I./ -I../../../share/net  -I../../../share/common  -I../../../share/thread  -I../../../share/log -I../../../common -I/usr/include/mysql/  -I../../../protc -I../../../share/pip
@@ -18,12 +19,14 @@ INCLUDE_DIRS = -I./ -I../../../share/net  -I../../../share/common  -I../../../sh
 CPPFLAGS := $(CPP_FLAGS) $(INCLUDE_DIRS) $(MACROS)
 LFALGS :=  $(CPP_FLAGS)  $(LIB) $(LIB_DIR)
 
-SRCS := $(wildcard *.cpp)
+
+SRCS := $(FILE)
+#echo $(SRCS)
 OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))
 
 
 $(TARGET):$(OBJS_CPP)
-	$(CXX) $(LFALGS) $^  -o $@
+	$(CXX) $(LFALGS) $^  -o $@  $(LIB_A)
 
 
 $(OBJS_CPP):%.o:%.cpp
@@ -40,4 +43,4 @@ clean:
 
 tag:
 	ctags -R ./*  ../share/*
-.PHONY: clean tag echo
+.PHONY: clean tag show

@@ -7,6 +7,7 @@
 #include "epoll_handler.h"
 #include "reactor.h"
 #include "sock.h"
+#include "channel_pip_line.h"
 
 template<typename HANDLER>
 class accepter : public epoll_handler
@@ -19,6 +20,7 @@ public:
 private:
 	unsigned int local_ip_;
 	unsigned int listen_port_;
+	channel_pip_line channel_;
 };
 
 template<typename HANDLER>
@@ -26,7 +28,6 @@ int accepter<HANDLER>::start(unsigned int port)
 {
 	return this->start(INADDR_ANY, port);
 }
-
 
 template<typename HANDLER>
 int accepter<HANDLER>::start(unsigned int ip, unsigned int port)
@@ -54,6 +55,7 @@ int accepter<HANDLER>::start(unsigned int ip, unsigned int port)
 	if (listen(this->sock(), SOMAXCONN) < 0)
 		return -1;
 	std::cout << "ok" << std::endl;
+	this->channel(new channel_pip_line);
 	return reactor::instance()->add(this);
 }
 
@@ -74,6 +76,7 @@ int accepter<HANDLER>::handle_input()
 		return -1;
 	}
     HANDLER *hd = new HANDLER(sock, &remote_addr);
+	hd->channel(this->channel());
 	reactor::instance()->add(hd);
 	return 0;
 }

@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <iostream>
+#include <errno.h>
 
 
 using namespace std;
@@ -18,7 +19,7 @@ int main()
 	int sin_size;
 	char buffer[1024]={0};   
 	struct sockaddr_in s_add,c_add;
-	unsigned short portnum=8089; 
+	unsigned short portnum=9091; 
 
 	printf("Hello,welcome to client !\r\n");
 
@@ -32,13 +33,14 @@ int main()
 
 	bzero(&s_add,sizeof(struct sockaddr_in));
 	s_add.sin_family=AF_INET;
-	s_add.sin_addr.s_addr= inet_addr("127.0.0.1");
+	s_add.sin_addr.s_addr= inet_addr("10.253.32.73");
 	s_add.sin_port=htons(portnum);
-	printf("s_addr = %#x ,port : %#x\r\n",s_add.sin_addr.s_addr,s_add.sin_port);
+	printf("s_addr = %#x ,port : %d\r\n",s_add.sin_addr.s_addr,s_add.sin_port);
 
 
 	if(-1 == connect(cfd,(struct sockaddr *)(&s_add), sizeof(struct sockaddr)))
 	{
+		cout << strerror(errno) << endl;
 		printf("connect fail !\r\n");
 		return -1;
 	}
@@ -55,7 +57,9 @@ int main()
 
 		memcpy(data+12, message_data.c_str(), i);
 		send(cfd, data, i+12, 0);
+		sleep(5);
 		std::string send_message(data+12, i);
+
 		if (i%200 == 0)
 			sleep(1);
 		if (i == 1023)

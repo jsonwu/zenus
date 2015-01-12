@@ -7,6 +7,7 @@
 #include "client_handler.h"
 #include "client_connector.h"
 #include "kcrontab_timer_mgr.h"
+#include "length_decoder.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ int main()
 		return -1;
 	}
 	accepter<client_handler> accept;
+	accept.channel()->push_back_recv_handler(new length_decoder);
 	if (accept.start(9098) < 0)
 	{
 		cout << "accepter start error" <<  endl;
@@ -38,6 +40,7 @@ int main()
 
 	while(1)
 	{
+		process_message(1000);
 		kcrontab_timer_mgr::instance()->update();
 	}
 }

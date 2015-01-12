@@ -6,7 +6,7 @@ CXX = g++
 SRCS := $(wildcard *.cpp)
 OBJS_CPP := $(patsubst %.cpp, %.o, $(SRCS))
 
-INCLUDE_DIRS = -I../../share/thread -I../../share/common  -I.
+INCLUDE_DIRS = -I../../share/thread -I../../share/common   -I../../share/buff -I. -I../../share/pip
 
 $(LIBS):$(OBJS_CPP)
 	ar r  $(DEST)/$@.a $^ 

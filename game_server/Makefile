@@ -7,6 +7,7 @@ SHARE_LIB_PATH = ../lib
 DB_LIB += $(SHARE_LIB_PATH)/libgamecommon.a
 DB_LIB += $(SHARE_LIB_PATH)/libnet.a
 DB_LIB += $(SHARE_LIB_PATH)/libtimer.a
+DB_LIB += $(SHARE_LIB_PATH)/libbuff.a
 
 
 TARGET=gameserver
@@ -16,7 +17,7 @@ MACROS =
 VPATH = ../share/
 VPATH += ../protc 
 
-INCLUDE_DIRS = -I./ -I../share/net  -I../share/common   -I ../share/timer -I../share/thread  -I../common -I/usr/include/mysql/  -I../protc  -I../game_common
+INCLUDE_DIRS = -I./ -I../share/net  -I../share/common   -I ../share/timer -I../share/thread  -I../common -I/usr/include/mysql/  -I../protc  -I../game_common  -I../share/buff
 
 CPPFLAGS := $(CPP_FLAGS) $(INCLUDE_DIRS) $(MACROS)
 LFALGS :=  $(CPP_FLAGS)  $(LIB) $(LIB_DIR)

@@ -7,10 +7,9 @@ class nolockpipe
 public:
 	nolockpipe();
 	~nolockpipe();
-
-	bool init(const int size);
-	bool read(const char *buf, const int size);
-	bool write(const char *buf, const int size);
+	int init(const int size);
+	int read(char *buf, const int size);
+	int write(const char *buf, const int size);
 private:
 	char *buff_;
 	char *head_;

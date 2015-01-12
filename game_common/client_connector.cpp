@@ -62,11 +62,13 @@ int client_connector::timer_time_out()
 
 int client_connector::timeout()
 {
+	/*
 	if (this->send(HEART_BEAT, "aaaaa"))
 	{
 		std::cout << "send heart_beat error" << std::endl;
 		return -0;
 	}
 	std::cout << "send heart_beat ok" << std::endl;
+	*/
 	return 0;
 }

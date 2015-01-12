@@ -8,6 +8,8 @@
 #include <sys/socket.h>
 #include <iostream>
 
+#include "channel_pip_line.h"
+#include "bytebuff.h"
 
 class epoll_handler
 {
@@ -51,7 +53,13 @@ public:
 	{ return 0; }
 	virtual int handle_timeout()
 	{ return 0; }
+	virtual int send(bytebuff *buff)
+	{ return -1; }
 
+	channel_pip_line* channel()
+	{ return this->channel_; }
+	void channel(channel_pip_line *channel)
+	{ this->channel_ = channel; }
 public:
 	inline void sock(int sk)
 	{ this->sock_ = sk; }
@@ -70,12 +78,21 @@ public:
 	inline  void port(unsigned short port)
 	{ this->port_ = port; }
 
+	int sock_status()
+	{ return this->sock_status_; }
+
+	void sock_status(int sock_status)
+	{ this->sock_status_ =  sock_status; }
+
 private:
 	int sock_;
+	int sock_status_;
+
 	unsigned int ip_;
 	unsigned short port_;
 	time_t timer_tm_;
 	void *userarg_;
+	channel_pip_line *channel_;
 };
 
 #endif
