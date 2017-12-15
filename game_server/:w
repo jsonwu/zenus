@@ -1,6 +1,0 @@
-#include "process_message.h"
-
-int process_message(const int num)
-{
-	void *p = NULL
-}
